@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MariaDB Notes</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 2rem; max-width: 720px; }
+      .header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+      .logo { width: 64px; height: 64px; }
+      form { margin-bottom: 1rem; }
+      input[type="text"] { width: 100%; padding: 0.5rem; }
+      button { margin-top: 0.5rem; padding: 0.5rem 1rem; }
+      .error { color: #b00020; margin-bottom: 1rem; }
+      table { width: 100%; border-collapse: collapse; }
+      th, td { border-bottom: 1px solid #ddd; padding: 0.5rem; text-align: left; }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <img src="{{ url_for('static', filename='logo-b.png') }}" alt="Logo" class="logo" />
+      <h1>Notes</h1>
+    </div>
+    {% if error %}
+      <div class="error">{{ error }}</div>s
+    {% endif %}
+    <form method="post">
+      <label for="content">Add a note</label>
+      <input id="content" name="content" type="text" placeholder="Write something" required />
+      <button type="submit">Save</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Content</th>
+          <th>Created</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+          <tr>
+            <td>{{ row.id }}</td>
+            <td>{{ row.content }}</td>
+            <td>{{ row.created_at }}</td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="3">No data yet</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
+
